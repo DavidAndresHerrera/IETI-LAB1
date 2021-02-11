@@ -1,0 +1,83 @@
+import React from 'react';
+import {TodoList} from './TodoList';
+
+export class TodoApp extends React.Component  {
+    constructor(props) {
+        super(props);
+        this.state = { items: [{text:"Learn React", priority:5, dueDate: new Date() },
+                {text:"Learn about APIs", priority:4, dueDate: new Date(2020,1,23) },
+                {text:"write TODO App", priority:3, dueDate: new Date(2020,1,30) }] };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handlePriority = this.handlePriority.bind(this);
+        this.handleDate = this.handleDate.bind(this);
+    }
+
+    render() {
+        return (
+            <div>
+                <h3>TODO</h3>
+                <TodoList items={this.state.items} />
+                <form onSubmit={this.handleSubmit}>
+                    <label htmlFor="new-todo">
+                        What needs to be done?
+                    </label>
+                    <input
+                        name = "text"
+                        type = "text"
+                        id="new-todo"
+                        onChange={this.handleChange}
+                        value={this.state.text}
+                    />
+                    <label htmlFor="new-todo">
+                        Date
+                    </label>
+                    <input
+                        name = "dueDate"
+                        onChange={this.handleDate}
+                        value={this.state.dueDate}
+                    />
+                    <label htmlFor="new-todo">
+                        Priority
+                    </label>
+                    <input
+                        id = "new-todo"
+                        onChange={this.handlePriority}
+                        value={this.state.priority}
+                    />
+                    <button>
+                        Add #{this.state.items.length + 1}
+                    </button>
+                </form>
+            </div>
+        );
+    }
+
+    handleChange(e) {
+        this.setState({ text: e.target.value });
+    }
+    handlePriority(e) {
+        this.setState({ priority: e.target.value });
+    }
+
+    handleDate(e){
+        this.setState({dueDate: e.target.value});
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        if (!this.state.text.length) {
+            return;
+        }
+        const newItem = {
+            text: this.state.text,
+            dueDate: Date.now(),
+            priority: this.state.priority,
+            id: Date.now()
+        };
+        this.setState(prevState => ({
+            items: prevState.items.concat(newItem),
+            text: ''
+        }));
+    }
+}

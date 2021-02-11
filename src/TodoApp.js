@@ -10,7 +10,7 @@ export class TodoApp extends React.Component  {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handlePriority = this.handlePriority.bind(this);
-        this.handleDate = this.handleDate.bind(this);
+
     }
 
     render() {
@@ -30,17 +30,11 @@ export class TodoApp extends React.Component  {
                         value={this.state.text}
                     />
                     <label htmlFor="new-todo">
-                        Date
-                    </label>
-                    <input
-                        name = "dueDate"
-                        onChange={this.handleDate}
-                        value={this.state.dueDate}
-                    />
-                    <label htmlFor="new-todo">
                         Priority
                     </label>
                     <input
+                        name = "priority"
+                        type = "number"
                         id = "new-todo"
                         onChange={this.handlePriority}
                         value={this.state.priority}
@@ -60,9 +54,6 @@ export class TodoApp extends React.Component  {
         this.setState({ priority: e.target.value });
     }
 
-    handleDate(e){
-        this.setState({dueDate: e.target.value});
-    }
 
     handleSubmit(e) {
         e.preventDefault();
